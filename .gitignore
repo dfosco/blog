@@ -22,3 +22,13 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# astro blog specific files
+.astro 
+.pnp.cjs 
+.pnp.loader.mjs
+.wrangler 
+.yarn 
+.yarnrc 
+.yarnrc.yml 
+tsconfig.json 
