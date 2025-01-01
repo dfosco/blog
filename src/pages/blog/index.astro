@@ -89,9 +89,34 @@ const posts = (await getCollection('blog')).sort(
 		<Header />
 		<main>
 			<section>
-				<ul>
+        {import.meta.env.DEV && (
+          <h4 style={{width: '100%', marginBottom: '40px'}}>Draft posts (dev env only)</h4>
+          <ul>
+            {
+              posts
+                .filter((post) => post.data.status === 'draft')
+                .map((post) => (
+                <li>
+                  <a href={`/blog/${post.id}/`}>
+                    <img width={720} height={360} src={post.data.heroImage} alt="" />
+                    <h4 class="title">{post.data.title}</h4>
+                    <p class="date">
+                      <FormattedDate date={post.data.pubDate} />
+                    </p>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        )}
+        <ul>
+          {import.meta.env.DEV && (
+            <h4 style={{width: '100%', margin: '40px 0'}}>Published posts (dev env only)</h4>
+          )}
 					{
-						posts.map((post) => (
+            posts
+              .filter((post) => post.data.status === 'published')
+              .map((post) => (
 							<li>
 								<a href={`/blog/${post.id}/`}>
 									<img width={720} height={360} src={post.data.heroImage} alt="" />
