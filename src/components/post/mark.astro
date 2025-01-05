@@ -3,10 +3,12 @@ interface Props {
   color?: string;
   random?: boolean;
   turn?: boolean;
+  block?: boolean;
 }
 
 // Color options for the hue
 const hueOptions = [
+  { hueName: 'gray', value: '1' },
   { hueName: 'yellow', value: '42' },
   { hueName: 'orange', value: '20' },
   { hueName: 'purple', value: '272' },
@@ -31,26 +33,33 @@ const {
   turn = false, 
   random = false, 
   color,
-  hue = random ? getRandomHue() : getMatchingHue(color)
+  hue = random ? getRandomHue() : getMatchingHue(color),
+  block = false
 } = Astro.props;
 
 // Gets random rotation value to pass into CSS
 const rotation = turn ? (Math.random() < 0.5 ? -0.3 : 0.3) : 0;
 ---
 
-<i class="mark">
+<i class={`mark ${block && 'inline-block'}`} data-color={color}>
 	<slot />
 </i>
-<style define:vars={{ hue, rotation: `${rotation}deg` }}>
+<style define:vars={{ hue, rotation: `${rotation}deg`, sat: `${(color === 'gray' ? '1%' : '96%')}`}}>
 
 	.mark {
-    /* outline: 3px solid hsla(var(--hue), 96%, 92%, 1); */
-    /* outline-offset: -2px; */
-    background-color: hsla(var(--hue), 96%, 92%, 1);
-    color: hsl(var(--hue), 96%, 20%);
+    outline: 3px solid hsla(var(--hue), var(--sat), 92%, 1);
+    outline-offset: -1px;
+    background-color: hsla(var(--hue), var(--sat), 92%, 1);
+    color: hsl(var(--hue), var(--sat), 20%);
     font-style: normal;
     transform: rotate(var(--rotation));
     display: inline-block;
     padding: 0 2px;
+  }
+
+  .inline-block {
+    margin-bottom: 12px;
+    display: block;
+    width: fit-content;
   }
 </style>
