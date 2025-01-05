@@ -1,0 +1,91 @@
+---
+interface Props {
+  more: string;
+}
+
+const { more } = Astro.props;
+---
+
+<span class="pop-wrapper">
+  <span class="pop-text"><slot /></span>
+  <button class="pop-trigger" aria-label="Show more information">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-right-up"><polyline points="10 9 15 4 20 9"></polyline><path d="M4 20h7a4 4 0 0 0 4-4V4"></path></svg>
+  </button>
+  <span class="pop-content" role="tooltip">{more}</span>
+</span>
+
+<style>
+  .pop-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2em;
+  }
+
+  .pop-text {
+    /* Remove the dotted underline since we now have an icon */
+    border-bottom: none;
+  }
+
+  .pop-trigger {
+    font-size: 12px;
+    font-weight: 900;
+    color: hsl(0, 0%, 40%);;
+    background-color: #fcfcfc;
+    border: 1px solid #efefef;
+    border-radius: 4px;
+    padding: 2px;
+    cursor: pointer;
+    position: relative;
+    top: -0.3em;
+    box-shadow: 0 4px 5px -3px rgb(0 0 0 / 0.1);
+    width: 24px;
+    height: 24px;
+  }
+
+  .pop-trigger:hover {
+    color: hsl(0, 0%, 30%);
+  }
+
+  .pop-content {
+    visibility: hidden;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem;
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: max-content;
+    max-width: 400px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9em;
+    z-index: 1;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.2s;
+  }
+
+  .pop-content.visible {
+    visibility: visible;
+    opacity: 1;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.pop-wrapper').forEach(wrapper => {
+    const trigger = wrapper.querySelector('.pop-trigger');
+    const content = wrapper.querySelector('.pop-content');
+    
+    trigger?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      content?.classList.toggle('visible');
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', () => {
+      content?.classList.remove('visible');
+    });
+  });
+</script>

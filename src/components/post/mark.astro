@@ -1,0 +1,56 @@
+---
+interface Props {
+  color?: string;
+  random?: boolean;
+  turn?: boolean;
+}
+
+// Color options for the hue
+const hueOptions = [
+  { hueName: 'yellow', value: '42' },
+  { hueName: 'orange', value: '20' },
+  { hueName: 'purple', value: '272' },
+  { hueName: 'blue', value: '210' },
+  { hueName: 'green', value: '142' }
+];
+
+// Gets a random color
+const getRandomHue = () => {
+  const randomIndex = Math.floor(Math.random() * hueOptions.length);
+  return hueOptions[randomIndex].value;
+};
+
+// Gets matching color between color prop and hueOptions
+const getMatchingHue = (color?: string) => {
+  if (!color) return '42';
+  const match = hueOptions.find(option => option.hueName === color);
+  return match?.value || '42';
+};
+
+const { 
+  turn = false, 
+  random = false, 
+  color,
+  hue = random ? getRandomHue() : getMatchingHue(color)
+} = Astro.props;
+
+// Gets random rotation value to pass into CSS
+const rotation = turn ? (Math.random() < 0.5 ? -0.3 : 0.3) : 0;
+---
+
+<i class="mark">
+	<slot />
+</i>
+<style define:vars={{ hue, rotation: `${rotation}deg` }}>
+
+	.mark {
+    /* outline: 3px solid hsla(var(--hue), 96%, 92%, 1); */
+    /* outline-offset: -2px; */
+    background-color: hsla(var(--hue), 96%, 92%, 1);
+    color: hsl(var(--hue), 96%, 20%);
+    font-style: normal;
+    transform: rotate(var(--rotation));
+    display: inline-block;
+    padding: 0 2px;
+  }
+</style>
