@@ -11,7 +11,7 @@ const { more } = Astro.props;
   <button class="pop-trigger" aria-label="Show more information">
     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-right-up"><polyline points="10 9 15 4 20 9"></polyline><path d="M4 20h7a4 4 0 0 0 4-4V4"></path></svg>
   </button>
-  <span class="pop-content" role="tooltip">{more}</span>
+  <span class="pop-content" role="tooltip" set:html={more} />
 </span>
 
 <style>
@@ -78,6 +78,17 @@ const { more } = Astro.props;
     const trigger = wrapper.querySelector('.pop-trigger');
     const content = wrapper.querySelector('.pop-content');
     
+    // Parse the content when component mounts
+    if (content) {
+      const text = content.textContent || '';
+      // Convert markdown links to HTML links with improved regex for complex URLs
+      const withLinks = text.replace(
+        /\[([^\]]+)\]\(([^"]*?(?:\([^)]*\)[^"]*?)*)\)/g, 
+        '<a target="_blank" href="$2">$1</a>'
+      );
+      content.innerHTML = withLinks;
+    }
+
     trigger?.addEventListener('click', (e) => {
       e.stopPropagation();
       content?.classList.toggle('visible');
