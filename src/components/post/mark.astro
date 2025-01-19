@@ -46,16 +46,26 @@ const rotation = turn ? (Math.random() < 0.5 ? -0.3 : 0.3) : 0;
 </i>
 <style define:vars={{ hue, rotation: `${rotation}deg`, sat: `${(color === 'gray' ? '1%' : '96%')}`}}>
 
+  
 	.mark {
-    outline: 3px solid hsla(var(--hue), var(--sat), 92%, 1);
-    outline-offset: -1px;
-    background-color: hsla(var(--hue), var(--sat), 92%, 1);
-    color: hsl(var(--hue), var(--sat), 20%);
+    --op: 60%;
+    outline: 0px solid hsla(var(--hue), var(--sat), 92%, var(--op));
+    box-shadow: none;
+    background-color: hsla(var(--hue), var(--sat), 92%, var(--op));
+    color: hsl(var(--hue), var(--sat), 10%);
     font-style: normal;
     transform: rotate(var(--rotation));
     display: inline-block;
     padding: 0 2px;
   }
+
+/* @supports (text-box: trim-both cap alphabetic) {
+  .mark {
+    outline: none;
+    text-box: trim-both cap alphabetic;
+    box-shadow: 0 0 0 6px hsla(var(--hue), var(--sat), 92%, var(--op));
+  }
+} */
 
   .inline-block {
     margin-bottom: 12px;
