@@ -8,10 +8,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "4.0.3",
-    "@astrojs/rss": "^4.0.10",
+    "@astrojs/mdx": "4.0.6",
+    "@astrojs/rss": "4.0.11",
     "@astrojs/sitemap": "^3.2.1",
-    "astro": "5.1.1"
+    "astro": "5.1.7"
   },
   "packageManager": "yarn@4.5.3"
 }
