@@ -10,8 +10,8 @@
     "editor.wordWrap": "wordWrapColumn",
     "editor.wordWrapColumn": 68,        
     "zenMode.centerLayout": true,
-    "editor.lineNumbers": "off",
-    "editor.quickSuggestions": {
+    "editor.lineNumbers": "off",    
+    "editor.quickSuggestions": { 
       "comments": "off",
       "strings": "off",
       "other": "off"
