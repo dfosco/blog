@@ -25,9 +25,4 @@ pnpm-debug.log*
 
 # astro blog specific files
 .astro 
-.pnp.cjs 
-.pnp.loader.mjs
-.yarn 
-.yarnrc 
-.yarnrc.yml 
 tsconfig.json 

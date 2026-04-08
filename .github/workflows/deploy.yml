@@ -26,14 +26,11 @@ jobs:
         with:
           node-version: 20
 
-      - name: Enable Corepack
-        run: corepack enable
-
       - name: Install dependencies
-        run: yarn install --immutable
+        run: npm ci
 
       - name: Build with Astro
-        run: yarn build
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
