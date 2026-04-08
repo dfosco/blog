@@ -27,7 +27,6 @@ pnpm-debug.log*
 .astro 
 .pnp.cjs 
 .pnp.loader.mjs
-.wrangler 
 .yarn 
 .yarnrc 
 .yarnrc.yml 
